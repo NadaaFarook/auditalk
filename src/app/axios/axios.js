@@ -3,7 +3,7 @@ import axios from "axios";
 
 const apiClient = axios.create({
   //baseURL: `${process.env.NEXT_PUBLIC_API_URL}/api`,
-  baseURL: "http://localhost:6010/api",
+  baseURL: "https://auditalk.hop.sh/api",
   headers: {
     Accept: "application/json",
     "Access-Control-Allow-Origin": "*",
