@@ -6,7 +6,8 @@ import {
   Button,
   Stack,
   Collapse,
-  useColorModeValue, useDisclosure
+  useColorModeValue,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { Logo } from "@/app/assets/index";
@@ -14,8 +15,10 @@ import Image from "next/image";
 import Link from "next/link";
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
-  let isToken = localStorage.getItem("x-auth-token");
-
+  let isToken = false;
+  if (typeof window !== "undefined") {
+    isToken = localStorage.getItem("x-auth-token");
+  }
   return (
     <Box>
       <Flex
@@ -88,8 +91,10 @@ export default function WithSubnavigation() {
               opacity: "80%",
             }}
             onClick={() => {
-              localStorage.removeItem("x-auth-token");
-              localStorage.removeItem("x-auth-email");
+              if (typeof window !== "undefined") {
+                localStorage.removeItem("x-auth-token");
+                localStorage.removeItem("x-auth-email");
+              }
               window.location.reload();
             }}
           >

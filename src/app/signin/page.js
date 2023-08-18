@@ -1,9 +1,5 @@
 "use client";
-import {
-  Heading,
-  Flex, Grid, Button,
-  useToast
-} from "@chakra-ui/react";
+import { Heading, Flex, Grid, Button, useToast } from "@chakra-ui/react";
 import Image from "next/image";
 import { Logo, SignIn } from "../assets";
 import { useGoogleLogin } from "@react-oauth/google";
@@ -15,7 +11,7 @@ import { useRouter } from "next/navigation";
 const Signin = () => {
   const { userContext, setContextUser } = useUserContext();
   const toast = useToast();
-  const router = useRouter()
+  const router = useRouter();
   const login = useGoogleLogin({
     onSuccess: async (response) => {
       try {
@@ -37,9 +33,11 @@ const Signin = () => {
           });
           if (resp.status == 200) {
             setContextUser(resp.data.data);
-            localStorage.setItem("x-auth-token", resp.data.session);
-            localStorage.setItem("x-auth-email", resp.data.data.email);
-            console.log(resp, "resp.data.data")
+            if (typeof window !== "undefined") {
+              localStorage.setItem("x-auth-token", resp.data.session);
+              localStorage.setItem("x-auth-email", resp.data.data.email);
+            }
+            console.log(resp, "resp.data.data");
             toast({
               title: resp.data.message,
               position: "top",
@@ -47,7 +45,7 @@ const Signin = () => {
               status: "success",
               duration: 3000,
             });
-            router.push("/")
+            router.push("/");
           }
         } catch (error) {
           //toast(error?.response?.data?.message, { type: "error" });
